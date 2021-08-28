@@ -8,4 +8,4 @@ build:
   config:
     WORKDIR: app
 run:
-  web: npm run start
+  web: PORT=$PORT npm run start
