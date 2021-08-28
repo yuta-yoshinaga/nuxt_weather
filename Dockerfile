@@ -11,13 +11,6 @@ RUN apt-get update && \
 
 WORKDIR /root
 
-# install yarn command.
-# - https://yarnpkg.com/lang/ja/docs/install/#alternatives-stable
-# - https://github.com/yarnpkg/yarn/releases
-# ARG CMD_YARN_VERSION=1.13.0
-# RUN npm install --global yarn@$CMD_YARN_VERSION && \
-#    chmod +x /usr/local/bin/yarn
-
 # install direnv command.
 # - https://github.com/direnv/direnv
 # - https://github.com/direnv/direnv/releases
@@ -31,8 +24,8 @@ RUN wget -O direnv https://github.com/direnv/direnv/releases/download/$DEV_DIREN
 RUN npm install --global @vue/cli @vue/cli-init
 
 # copy application code from host.
-ADD src /src
-WORKDIR /src/app
+COPY . /src/app/
+WORKDIR /src/app/
 
 # install packages.
 RUN npm install
