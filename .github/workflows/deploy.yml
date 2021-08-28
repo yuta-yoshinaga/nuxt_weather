@@ -24,6 +24,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
       - name: Get Next Version TAG
         id: get-next-version-tag
         run: |
@@ -58,4 +59,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY_DEV}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME_DEV}}
           heroku_email: ${{secrets.HEROKU_EMAIL_DEV}}
-
+          usedocker: true
