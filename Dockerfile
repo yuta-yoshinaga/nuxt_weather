@@ -24,8 +24,8 @@ RUN wget -O direnv https://github.com/direnv/direnv/releases/download/$DEV_DIREN
 RUN npm install --global @vue/cli @vue/cli-init
 
 # copy application code from host.
-ADD ./ /src
-WORKDIR /src/app
+COPY . /src/app/
+WORKDIR /src/app/
 
 # install packages.
 RUN npm install
