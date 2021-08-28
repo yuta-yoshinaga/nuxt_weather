@@ -4,19 +4,13 @@ FROM node:14.15.5
 # https://github.com/moby/moby/issues/12084
 ENV LANG C.UTF-8
 ENV TZ Asia/Tokyo
+ENV HOST 0.0.0.0
 
 # system update
 RUN apt-get update && \
     apt-get install -y vim less
 
 WORKDIR /root
-
-# install yarn command.
-# - https://yarnpkg.com/lang/ja/docs/install/#alternatives-stable
-# - https://github.com/yarnpkg/yarn/releases
-# ARG CMD_YARN_VERSION=1.13.0
-# RUN npm install --global yarn@$CMD_YARN_VERSION && \
-#    chmod +x /usr/local/bin/yarn
 
 # install direnv command.
 # - https://github.com/direnv/direnv
