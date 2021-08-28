@@ -4,7 +4,6 @@ FROM node:14.15.5
 # https://github.com/moby/moby/issues/12084
 ENV LANG C.UTF-8
 ENV TZ Asia/Tokyo
-ENV HOST 0.0.0.0
 
 # system update
 RUN apt-get update && \
@@ -25,7 +24,7 @@ RUN wget -O direnv https://github.com/direnv/direnv/releases/download/$DEV_DIREN
 RUN npm install --global @vue/cli @vue/cli-init
 
 # copy application code from host.
-ADD src /src
+ADD ./ /src
 WORKDIR /src/app
 
 # install packages.
