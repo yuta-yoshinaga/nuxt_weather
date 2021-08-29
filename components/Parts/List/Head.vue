@@ -1,17 +1,10 @@
 <template>
   <div>
     <PartsCommonBox
-      curTitle="予報の発表日時"
-      :curPropaty="getCurWether().publicTimeFormatted"
-    />
-    <PartsCommonBox
-      curTitle="予報を発表した気象台"
-      :curPropaty="getCurWether().publishingOffice"
-    />
-    <PartsCommonBox curTitle="タイトル・見出し" :curPropaty="getCurWether().title" />
-    <PartsCommonBox
-      curTitle="リクエストされたデータの地域に該当する気象庁 HP の天気予報のURL"
-      :curPropaty="getCurWetherLink()"
+      v-for="(element, index) in elements"
+      :key="index"
+      :curTitle="element.title"
+      :curPropaty="element.propaty"
     />
   </div>
 </template>
@@ -20,6 +13,29 @@
 import Mixin from "../../mixin";
 export default {
   mixins: [Mixin],
+  data() {
+    return {
+      elements: [
+        {
+          title: "予報の発表日時",
+          propaty: this.getCurWether().publicTimeFormatted,
+        },
+        {
+          title: "予報を発表した気象台",
+          propaty: this.getCurWether().publishingOffice,
+        },
+        {
+          title: "タイトル・見出し",
+          propaty: this.getCurWether().title,
+        },
+        {
+          title:
+            "リクエストされたデータの地域に該当する気象庁 HP の天気予報のURL",
+          propaty: this.getCurWetherLink(),
+        },
+      ],
+    };
+  },
   methods: {
     getCurWetherLink() {
       return (

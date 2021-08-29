@@ -1,40 +1,36 @@
 <template>
-  <div class="box">
-    <div class="field">
-      <label class="label">予報を発表した地域を定義</label>
-      <div class="control columns">
-        <div class="column">
-          <PartsCommonBox
-            curTitle="地方名"
-            :curPropaty="getCurWether().location.area"
-          />
-        </div>
-        <div class="column">
-          <PartsCommonBox
-            curTitle="都道府県名"
-            :curPropaty="getCurWether().location.prefecture"
-          />
-        </div>
-        <div class="column">
-          <PartsCommonBox
-            curTitle="一次細分区域名"
-            :curPropaty="getCurWether().location.district"
-          />
-        </div>
-        <div class="column">
-          <PartsCommonBox
-            curTitle="地域名（気象観測所名）"
-            :curPropaty="getCurWether().location.city"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  <PartsCommonBoxWrap
+    label="予報を発表した地域を定義"
+    :elements="elements"
+    :isColums="true"
+  />
 </template>
 
 <script>
 import Mixin from "../../mixin";
 export default {
   mixins: [Mixin],
+  data() {
+    return {
+      elements: [
+        {
+          title: "地方名",
+          propaty: this.getCurWether().location.area,
+        },
+        {
+          title: "都道府県名",
+          propaty: this.getCurWether().location.prefecture,
+        },
+        {
+          title: "一次細分区域名",
+          propaty: this.getCurWether().location.district,
+        },
+        {
+          title: "地域名（気象観測所名）",
+          propaty: this.getCurWether().location.city,
+        },
+      ],
+    };
+  },
 };
 </script>

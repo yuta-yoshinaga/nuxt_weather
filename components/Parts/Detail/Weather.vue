@@ -1,34 +1,28 @@
 <template>
-  <div class="box">
-    <div class="field">
-      <label class="label">天気詳細</label>
-      <div class="control columns">
-        <div class="column">
-          <PartsCommonBox
-            curTitle="詳細な天気情報"
-            :curPropaty="getCurForecast().detail.weather"
-          />
-        </div>
-        <div class="column">
-          <PartsCommonBox
-            curTitle="風の強さ"
-            :curPropaty="getCurForecast().detail.wind"
-          />
-        </div>
-        <div class="column">
-          <PartsCommonBox
-            curTitle="波の高さ（海に面している地域のみ）"
-            :curPropaty="getCurForecast().detail.wave"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  <PartsCommonBoxWrap label="天気詳細" :elements="elements" :isColums="true" />
 </template>
 
 <script>
 import Mixin from "../../mixin";
 export default {
   mixins: [Mixin],
+  data() {
+    return {
+      elements: [
+        {
+          title: "詳細な天気情報",
+          propaty: this.getCurForecast().detail.weather,
+        },
+        {
+          title: "風の強さ",
+          propaty: this.getCurForecast().detail.wind,
+        },
+        {
+          title: "波の高さ（海に面している地域のみ）",
+          propaty: this.getCurForecast().detail.wave,
+        },
+      ],
+    };
+  },
 };
 </script>
