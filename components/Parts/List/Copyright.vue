@@ -4,45 +4,16 @@
       <label class="label">copyright</label>
       <div class="control">
         <PartsCommonBox
-          curTitle="コピーライトの文言"
-          :curPropaty="getCurWether().copyright.title"
+          v-for="(element, index) in copyrightInfo.elements"
+          :key="index"
+          :curTitle="element.title"
+          :curPropaty="element.propaty"
         />
-        <PartsCommonBox
-          curTitle="天気予報 API（livedoor 天気互換）の URL"
-          :curPropaty="getCurWetherCopyrightLink()"
+        <PartsCommonBoxWrap
+          label="天気予報 API（livedoor天気互換）で使用している気象データの配信元（気象庁）"
+          :elements="copyrightSrcInfo.elements"
+          :isColums="true"
         />
-        <PartsCommonBox
-          curTitle="天気予報 API（livedoor 天気互換）のアイコン"
-          :curPropaty="getCurWetherCopyrightIcon()"
-        />
-        <div class="box">
-          <div class="field">
-            <label class="label"
-              >天気予報 API（livedoor
-              天気互換）で使用している気象データの配信元（気象庁）</label
-            >
-            <div class="control columns">
-              <div class="column">
-                <PartsCommonBox
-                  curTitle="link"
-                  :curPropaty="getCurWetherCopyrightProviderLink()"
-                />
-              </div>
-              <div class="column">
-                <PartsCommonBox
-                  curTitle="name"
-                  :curPropaty="getCurWether().copyright.provider[0].name"
-                />
-              </div>
-              <div class="column">
-                <PartsCommonBox
-                  curTitle="note"
-                  :curPropaty="getCurWether().copyright.provider[0].note"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -52,6 +23,42 @@
 import Mixin from "../../mixin";
 export default {
   mixins: [Mixin],
+  data() {
+    return {
+      copyrightInfo: {
+        elements: [
+          {
+            title: "コピーライトの文言",
+            propaty: this.getCurWether().copyright.title,
+          },
+          {
+            title: "天気予報 API（livedoor 天気互換）の URL",
+            propaty: this.getCurWetherCopyrightLink(),
+          },
+          {
+            title: "天気予報 API（livedoor 天気互換）のアイコン",
+            propaty: this.getCurWetherCopyrightIcon(),
+          },
+        ],
+      },
+      copyrightSrcInfo: {
+        elements: [
+          {
+            title: "link",
+            propaty: this.getCurWetherCopyrightProviderLink(),
+          },
+          {
+            title: "name",
+            propaty: this.getCurWether().copyright.provider[0].name,
+          },
+          {
+            title: "note",
+            propaty: this.getCurWether().copyright.provider[0].note,
+          },
+        ],
+      },
+    };
+  },
   methods: {
     getCurWetherCopyrightLink() {
       return (

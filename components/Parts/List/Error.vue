@@ -15,5 +15,13 @@
 import Mixin from "../../mixin";
 export default {
   mixins: [Mixin],
+  methods: {
+    getHasError() {
+      return this.$store.getters["hasError"];
+    },
+    getErrorMessage() {
+      return this.$store.getters["errorMessage"];
+    },
+  },
 };
 </script>
