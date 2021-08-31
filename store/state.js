@@ -11,4 +11,5 @@ export default () => ({
     citys: null,
     curPref: null,
     curCity: null,
+    loading: false,
 })
