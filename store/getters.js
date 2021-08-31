@@ -23,4 +23,7 @@ export default {
     curCity: (state) => {
         return state.curCity;
     },
+    loading: (state) => {
+        return state.loading;
+    },
 }

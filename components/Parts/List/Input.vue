@@ -35,7 +35,6 @@ export default {
   data() {
     return {
       prefs: this.$INFO_TBL.prefs,
-      loading: false,
     };
   },
   computed: {
@@ -43,11 +42,11 @@ export default {
       return {
         button: true,
         "is-primary": true,
-        "is-loading": this.loading,
+        "is-loading": this.loading(),
       };
     },
     canSendBtn() {
-      return this.curPref && this.curCity && !this.loading ? false : true;
+      return this.curPref && this.curCity && !this.loading() ? false : true;
     },
     curPref: {
       get() {
@@ -70,6 +69,9 @@ export default {
     citys() {
       return this.$store.getters["citys"];
     },
+    loading() {
+      return this.$store.getters["loading"];
+    },
     prefChange() {
       let pref = this.prefs.filter((current) => current.name === this.curPref);
       if (pref.length != 0) {
@@ -78,38 +80,7 @@ export default {
       }
     },
     getWeather() {
-      this.$store.dispatch("setHasError", false);
-      this.$store.dispatch("setErrorMessage", "");
-      this.$store.dispatch("setCurWether", null);
-      this.loading = true;
-      this.$axios
-        .get(
-          "https://weather.tsukumijima.net/api/forecast/city/" + this.curCity
-        )
-        .then(
-          function (response) {
-            if (response.data) {
-              if (response.data.error) {
-                this.$store.dispatch("setHasError", true);
-                this.$store.dispatch("setErrorMessage", response.data.error);
-              } else {
-                // API戻り値を設定
-                this.$store.dispatch("setCurWether", response.data);
-              }
-            }
-          }.bind(this)
-        )
-        .catch(
-          function (error) {
-            this.$store.dispatch("setHasError", true);
-            this.$store.dispatch("setErrorMessage", response.data.error);
-          }.bind(this)
-        )
-        .finally(
-          function () {
-            this.loading = false;
-          }.bind(this)
-        );
+      this.$store.dispatch("getWeather", this.$axios);
     },
     daysChange: function (date) {
       // 現在の日付を設定

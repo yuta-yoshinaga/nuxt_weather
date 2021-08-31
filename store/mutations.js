@@ -23,4 +23,7 @@ export default {
     curCity: (state, setCurCity) => {
         state.curCity = setCurCity;
     },
+    loading: (state, setLoading) => {
+        state.loading = setLoading;
+    },
 }
