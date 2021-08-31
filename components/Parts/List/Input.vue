@@ -82,13 +82,6 @@ export default {
     getWeather() {
       this.$store.dispatch("getWeather", this.$axios);
     },
-    daysChange: function (date) {
-      // 現在の日付を設定
-      this.$store.dispatch("setCurrentDate", date);
-
-      // ページ切り替え
-      this.$store.dispatch("setCurrent", "detail");
-    },
   },
 };
 </script>
