@@ -11,11 +11,11 @@ jobs:
   production:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    if: github.ref == 'master'
     environment:
-      if: github.ref == 'master'
       name: production
+    if: github.ref == 'develop'
     environment:
-      if: github.ref == 'develop'
       name: develop
     steps:
       - name: Checkout
