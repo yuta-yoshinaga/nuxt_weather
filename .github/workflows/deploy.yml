@@ -11,7 +11,7 @@ jobs:
   production:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    enviromentt:
+    enviroment:
       name: production
     steps:
       - name: Checkout
