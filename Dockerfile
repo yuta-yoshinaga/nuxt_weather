@@ -28,7 +28,7 @@ COPY . /src/app/
 WORKDIR /src/app/
 
 # install packages.
-RUN npm install
+RUN npm install && npm run build
 
 EXPOSE 3000
 CMD ["npm", "run", "start"]
