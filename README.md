@@ -25,8 +25,8 @@ docker-compose up -d
 ```
 
 ### Deploy
-![herokubutton](https://www.herokucdn.com/deploy/button.svg)  
-[Heroku](https://nuxt-weather-yy.herokuapp.com/)
+[render live](https://nuxt-weather.onrender.com/)
+[render dev](https://nuxt-weather-dev.onrender.com/)
 
 ## Future Releases
 Vue3に対応させたい。
