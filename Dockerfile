@@ -1,4 +1,4 @@
-FROM node:14.15.5
+FROM node:18
 
 # locale & timezone (Asia/Tokyo)
 # https://github.com/moby/moby/issues/12084
