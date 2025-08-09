@@ -19,78 +19,75 @@
   </div>
 </template>
 
-<script>
-import Mixin from "../../mixin";
-export default {
-  mixins: [Mixin],
-  data() {
-    return {
-      copyrightInfo: {
-        elements: [
-          {
-            title: "コピーライトの文言",
-            propaty: this.getCurWether().copyright.title,
-          },
-          {
-            title: "天気予報 API（livedoor 天気互換）の URL",
-            propaty: this.getCurWetherCopyrightLink(),
-          },
-          {
-            title: "天気予報 API（livedoor 天気互換）のアイコン",
-            propaty: this.getCurWetherCopyrightIcon(),
-          },
-        ],
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useWeather } from '@/composables/useWeather'
+
+const { weather } = useWeather()
+
+const getCurWetherCopyrightLink = computed(() => {
+  const copyright = weather.value?.copyright
+  if (!copyright) return ''
+  return `<a target="_blank" href="${copyright.link}">${copyright.link}</a>`
+})
+
+const getCurWetherCopyrightIcon = computed(() => {
+  const copyright = weather.value?.copyright
+  if (!copyright || !copyright.image) return ''
+  const image = copyright.image
+  return `<img src="${image.url}" alt="${image.title}" width="${image.width}" height="${image.height}" />`
+})
+
+const getCurWetherCopyrightProviderLink = computed(() => {
+  const provider = weather.value?.copyright?.provider?.[0]
+  if (!provider) return ''
+  return `<a target="_blank" href="${provider.link}">${provider.link}</a>`
+})
+
+const copyrightInfo = computed(() => {
+  const curWeather = weather.value
+  if (!curWeather || !curWeather.copyright) {
+    return { elements: [] }
+  }
+  return {
+    elements: [
+      {
+        title: "コピーライトの文言",
+        propaty: curWeather.copyright.title,
       },
-      copyrightSrcInfo: {
-        elements: [
-          {
-            title: "link",
-            propaty: this.getCurWetherCopyrightProviderLink(),
-          },
-          {
-            title: "name",
-            propaty: this.getCurWether().copyright.provider[0].name,
-          },
-          {
-            title: "note",
-            propaty: this.getCurWether().copyright.provider[0].note,
-          },
-        ],
+      {
+        title: "天気予報 API（livedoor 天気互換）の URL",
+        propaty: getCurWetherCopyrightLink.value,
       },
-    };
-  },
-  methods: {
-    getCurWetherCopyrightLink() {
-      return (
-        `<a target="_blank" href="` +
-        this.getCurWether().copyright.link +
-        `">` +
-        this.getCurWether().copyright.link +
-        `</a>`
-      );
-    },
-    getCurWetherCopyrightIcon() {
-      return (
-        `<img src="` +
-        this.getCurWether().copyright.image.url +
-        `" alt="` +
-        this.getCurWether().copyright.image.title +
-        `" width="` +
-        this.getCurWether().copyright.image.width +
-        `" height="` +
-        this.getCurWether().copyright.image.height +
-        `" />`
-      );
-    },
-    getCurWetherCopyrightProviderLink() {
-      return (
-        `<a target="_blank" href="` +
-        this.getCurWether().copyright.provider[0].link +
-        `">` +
-        this.getCurWether().copyright.provider[0].link +
-        `</a>`
-      );
-    },
-  },
-};
+      {
+        title: "天気予報 API（livedoor 天気互換）のアイコン",
+        propaty: getCurWetherCopyrightIcon.value,
+      },
+    ],
+  }
+})
+
+const copyrightSrcInfo = computed(() => {
+  const curWeather = weather.value
+  if (!curWeather || !curWeather.copyright || !curWeather.copyright.provider?.[0]) {
+    return { elements: [] }
+  }
+  const provider = curWeather.copyright.provider[0]
+  return {
+    elements: [
+      {
+        title: "link",
+        propaty: getCurWetherCopyrightProviderLink.value,
+      },
+      {
+        title: "name",
+        propaty: provider.name,
+      },
+      {
+        title: "note",
+        propaty: provider.note,
+      },
+    ],
+  }
+})
 </script>

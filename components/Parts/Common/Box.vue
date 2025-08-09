@@ -7,15 +7,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["curTitle", "curPropaty", "callback", "callbackParam"],
-  methods: {
-    clickEvent() {
-      if (this.callback) {
-        this.callback(this.callbackParam);
-      }
-    },
-  },
-};
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue'
+
+const props = defineProps<{
+  curTitle: string,
+  curPropaty: string,
+  callback?: Function,
+  callbackParam?: any
+}>()
+
+const emit = defineEmits(['clickEvent']) // Define custom event
+
+const clickEvent = () => {
+  if (props.callback) {
+    props.callback(props.callbackParam)
+  }
+  emit('clickEvent', props.callbackParam) // Emit a custom event as well
+}
 </script>
