@@ -2,24 +2,27 @@
   <PartsCommonBoxWrap :label="title" :elements="elements" :isColums="true" />
 </template>
 
-<script>
-import Mixin from "../../mixin";
-export default {
-  props: ["title", "temperature"],
-  mixins: [Mixin],
-  data() {
-    return {
-      elements: [
-        {
-          title: "摂氏 (°C)",
-          propaty: this.temperature.celsius,
-        },
-        {
-          title: "華氏 (°F)",
-          propaty: this.temperature.fahrenheit,
-        },
-      ],
-    };
-  },
-};
+<script setup lang="ts">
+import { computed, defineProps } from 'vue'
+
+const props = defineProps<{
+  title: string,
+  temperature: {
+    celsius: string,
+    fahrenheit: string
+  }
+}>()
+
+const elements = computed(() => {
+  return [
+    {
+      title: "摂氏 (°C)",
+      propaty: props.temperature.celsius,
+    },
+    {
+      title: "華氏 (°F)",
+      propaty: props.temperature.fahrenheit,
+    },
+  ]
+})
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nuxt/>
+    <slot />
   </div>
 </template>
 
@@ -50,4 +50,3 @@ html {
   background-color: #35495e;
 }
 </style>
-

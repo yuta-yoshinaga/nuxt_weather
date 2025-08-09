@@ -22,8 +22,17 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["label", "elements", "isColums"],
-};
+<script setup lang="ts">
+import { defineProps } from 'vue'
+
+interface Element {
+  title: string;
+  propaty: string;
+}
+
+const props = defineProps<{
+  label: string,
+  elements: Element[],
+  isColums?: boolean
+}>()
 </script>
