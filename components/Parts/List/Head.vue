@@ -9,43 +9,41 @@
   </div>
 </template>
 
-<script>
-import Mixin from "../../mixin";
-export default {
-  mixins: [Mixin],
-  data() {
-    return {
-      elements: [
-        {
-          title: "予報の発表日時",
-          propaty: this.getCurWether().publicTimeFormatted,
-        },
-        {
-          title: "予報を発表した気象台",
-          propaty: this.getCurWether().publishingOffice,
-        },
-        {
-          title: "タイトル・見出し",
-          propaty: this.getCurWether().title,
-        },
-        {
-          title:
-            "リクエストされたデータの地域に該当する気象庁 HP の天気予報のURL",
-          propaty: this.getCurWetherLink(),
-        },
-      ],
-    };
-  },
-  methods: {
-    getCurWetherLink() {
-      return (
-        `<a target="_blank" href="` +
-        this.getCurWether().link +
-        `">` +
-        this.getCurWether().link +
-        `</a>`
-      );
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useWeather } from '@/composables/useWeather'
+
+const { weather } = useWeather()
+
+const getCurWetherLink = computed(() => {
+  const curWeather = weather.value
+  if (!curWeather) return ''
+  return `<a target="_blank" href="${curWeather.link}">${curWeather.link}</a>`
+})
+
+const elements = computed(() => {
+  const curWeather = weather.value
+  if (!curWeather) {
+    return []
+  }
+  return [
+    {
+      title: "予報の発表日時",
+      propaty: curWeather.publicTimeFormatted,
     },
-  },
-};
+    {
+      title: "予報を発表した気象台",
+      propaty: curWeather.publishingOffice,
+    },
+    {
+      title: "タイトル・見出し",
+      propaty: curWeather.title,
+    },
+    {
+      title:
+        "リクエストされたデータの地域に該当する気象庁 HP の天気予報のURL",
+      propaty: getCurWetherLink.value,
+    },
+  ]
+})
 </script>

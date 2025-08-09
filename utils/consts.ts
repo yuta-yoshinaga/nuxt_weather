@@ -1,4 +1,4 @@
-const INFO_TBL = {
+export const INFO_TBL = {
     prefs: [
         {
             name: "北海道",

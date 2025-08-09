@@ -34,23 +34,23 @@ This project uses `npm` as its package manager.
 
 ## High-Level Architecture
 
-This is a Nuxt.js v2 single-page application (`ssr: false`) that functions as a weather forecast viewer.
+This is a Nuxt.js v3 single-page application (`ssr: false`) that functions as a weather forecast viewer.
 
 ### View/Page Management
 
 The application does not use Nuxt's standard file-based routing for navigating between the main list and detail views. Instead, it employs a dynamic component pattern within `pages/index.vue`.
 
-- **`pages/index.vue`**: Acts as a controller that renders either the `List` or `Detail` component based on state managed in Vuex.
-- **Vuex Store**: The primary driver for UI state. It holds the `current` component to display (`list` or `detail`). Actions like `this.$store.dispatch("setCurrent", "detail")` are used to switch between views.
+- **`pages/index.vue`**: Acts as a controller that renders either the `List` or `Detail` component based on state managed in Pinia.
+- **Pinia Store (`stores/weather.ts`)**: The primary driver for UI state. It holds the `currentView` to display (`list` or `detail`). Actions like `setCurrentView("detail")` are used to switch between views.
 - **`components/List.vue`**: The main view, showing a list of weather forecasts.
 - **`components/Detail.vue`**: The detail view, showing specific information for a selected day.
 
 ### Data Fetching
 
-The application fetches weather data from a third-party API: `https://weather.tsukumijima.net/` (a Livedoor Weather compatible API). The `@nuxtjs/axios` module is used for making the API calls. All API interaction logic is managed within the Vuex store.
+The application fetches weather data from a third-party API: `https://weather.tsukumijima.net/` (a Livedoor Weather compatible API). Nuxt's `$fetch` is used for making the API calls. All API interaction logic is managed within the Pinia store (`stores/weather.ts`).
 
 ### Code Structure
 
 - **Components**: Components are organized into `components/` and `components/Parts/`. The `Parts` directory contains smaller, reusable sub-components.
-- **Mixins**: A shared mixin at `components/mixin.js` is used across several components to provide common helper methods for accessing weather data from the Vuex store.
-- **CI/CD**: GitHub Actions are configured in `.github/workflows/`. Notably, `release-tag.yml` automates version bumping and release creation upon pushes to the `master` branch.
+- **Composables**: A shared composable at `composables/useWeather.ts` is used across several components to provide common helper methods and access to the Pinia store. This composable has absorbed the functionality previously found in a mixin.
+- **Styling**: The application uses Sass for styling, with the main stylesheet located at `assets/sass/style.scss`.

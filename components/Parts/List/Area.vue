@@ -6,31 +6,34 @@
   />
 </template>
 
-<script>
-import Mixin from "../../mixin";
-export default {
-  mixins: [Mixin],
-  data() {
-    return {
-      elements: [
-        {
-          title: "地方名",
-          propaty: this.getCurWether().location.area,
-        },
-        {
-          title: "都道府県名",
-          propaty: this.getCurWether().location.prefecture,
-        },
-        {
-          title: "一次細分区域名",
-          propaty: this.getCurWether().location.district,
-        },
-        {
-          title: "地域名（気象観測所名）",
-          propaty: this.getCurWether().location.city,
-        },
-      ],
-    };
-  },
-};
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useWeather } from '@/composables/useWeather'
+
+const { weather } = useWeather()
+
+const elements = computed(() => {
+  const curWeather = weather.value
+  if (!curWeather || !curWeather.location) {
+    return []
+  }
+  return [
+    {
+      title: "地方名",
+      propaty: curWeather.location.area,
+    },
+    {
+      title: "都道府県名",
+      propaty: curWeather.location.prefecture,
+    },
+    {
+      title: "一次細分区域名",
+      propaty: curWeather.location.district,
+    },
+    {
+      title: "地域名（気象観測所名）",
+      propaty: curWeather.location.city,
+    },
+  ]
+})
 </script>

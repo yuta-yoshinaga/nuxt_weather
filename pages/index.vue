@@ -1,24 +1,22 @@
 <template>
-  <div id="app" v-cloak>
-    <component :is="this.$store.getters['component']" />
+  <div>
+    <component :is="activeComponent" />
   </div>
 </template>
 
-<script>
-import List from "~/components/List.vue";
-import Detail from "~/components/Detail.vue";
-import "~/assets/sass/style.scss";
+<script setup lang="ts">
+import { computed, defineAsyncComponent } from 'vue'
+import { useWeather } from '@/composables/useWeather'
 
-export default {
-  components: {
-    "component-list": List,
-    "component-detail": Detail,
-  },
-  created() {
-    // ページ切り替え
-    this.$store.dispatch("setCurrent", "list");
-    // ページ位置を先頭へ戻す
-    scrollTo(0, 0);
-  },
-};
+// Composable から状態を取得
+const { currentView } = useWeather()
+
+// 動的コンポーネントの定義
+const ListComponent = defineAsyncComponent(() => import('@/components/List.vue'))
+const DetailComponent = defineAsyncComponent(() => import('@/components/Detail.vue'))
+
+// currentView の値に応じて表示するコンポーネントを切り替える
+const activeComponent = computed(() => {
+  return currentView.value === 'detail' ? DetailComponent : ListComponent
+})
 </script>

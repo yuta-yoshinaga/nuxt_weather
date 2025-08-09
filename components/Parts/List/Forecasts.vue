@@ -5,7 +5,7 @@
       <div class="control columns">
         <div
           class="column"
-          v-for="(forecast, index) in getCurWether().forecasts"
+          v-for="(forecast, index) in weather?.forecasts"
           :key="index"
         >
           <PartsCommonBox
@@ -20,22 +20,18 @@
   </div>
 </template>
 
-<script>
-import Mixin from "../../mixin";
-export default {
-  mixins: [Mixin],
-  methods: {
-    daysChange(date) {
-      // 現在の日付を設定
-      this.$store.dispatch("setCurrentDate", date);
-      // ページ切り替え
-      this.$store.dispatch("setCurrent", "detail");
-      // ページ位置を先頭へ戻す
-      scrollTo(0, 0);
-    },
-    getCurWetherForecast(forecast) {
-      return `<button class="button is-link">` + forecast.date + `</button>`;
-    },
-  },
-};
+<script setup lang="ts">
+import { useWeather } from '@/composables/useWeather'
+
+const { weather, setCurrentView, setSelectedDate } = useWeather()
+
+const daysChange = (date: string) => {
+  setSelectedDate(date)
+  setCurrentView('detail')
+  // scrollTo(0, 0); // Nuxt 3 handles scroll behavior by default, or can be configured
+}
+
+const getCurWetherForecast = (forecast: any) => {
+  return `<button class="button is-link">${forecast.date}</button>`
+}
 </script>

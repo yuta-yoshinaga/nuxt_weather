@@ -5,45 +5,44 @@
     <PartsDetailWeather />
     <PartsDetailTemperature
       title="最高気温"
-      :temperature="getCurForecast().temperature.max"
+      :temperature="currentForecast?.temperature.max"
     />
     <PartsDetailTemperature
       title="最低気温"
-      :temperature="getCurForecast().temperature.min"
+      :temperature="currentForecast?.temperature.min"
     />
     <PartsDetailChanceOfRain />
     <PartsCommonBox
       curTitle="天気アイコン"
-      :curPropaty="getCurForecastImage()"
+      :curPropaty="currentForecastImage"
     />
     <button class="button is-link" @click="prev()">戻る</button>
   </div>
 </template>
 
-<script>
-import Mixin from "./mixin";
-export default {
-  mixins: [Mixin],
-  methods: {
-    getCurForecastImage() {
-      return (
-        `<img src="` +
-        this.getCurForecast().image.url +
-        `" alt="` +
-        this.getCurForecast().image.title +
-        `" width="` +
-        this.getCurForecast().image.width +
-        `" height="` +
-        this.getCurForecast().image.height +
-        `" />`
-      );
-    },
-    prev() {
-      // ページ切り替え
-      this.$store.dispatch("setCurrent", "list");
-      // ページ位置を先頭へ戻す
-      scrollTo(0, 0);
-    },
-  },
-};
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useWeather } from '@/composables/useWeather'
+
+const { weather, selectedDate, setCurrentView, getCurForecast } = useWeather()
+
+const currentForecast = computed(() => {
+  if (selectedDate.value) {
+    return getCurForecast(selectedDate.value)
+  }
+  return null
+})
+
+const currentForecastImage = computed(() => {
+  if (currentForecast.value?.image) {
+    const image = currentForecast.value.image
+    return `<img src="${image.url}" alt="${image.title}" width="${image.width}" height="${image.height}" />`
+  }
+  return ''
+})
+
+const prev = () => {
+  setCurrentView('list')
+  // scrollTo(0, 0); // Nuxt 3 handles scroll behavior by default, or can be configured
+}
 </script>

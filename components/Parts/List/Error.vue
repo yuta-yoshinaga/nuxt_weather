@@ -1,27 +1,18 @@
 <template>
-  <div v-if="getHasError()">
+  <div v-if="error">
     <article class="message is-danger">
       <div class="message-header">
         <p>Error</p>
       </div>
       <div class="message-body">
-        {{ getErrorMessage() }}
+        {{ error.message }}
       </div>
     </article>
   </div>
 </template>
 
-<script>
-import Mixin from "../../mixin";
-export default {
-  mixins: [Mixin],
-  methods: {
-    getHasError() {
-      return this.$store.getters["hasError"];
-    },
-    getErrorMessage() {
-      return this.$store.getters["errorMessage"];
-    },
-  },
-};
+<script setup lang="ts">
+import { useWeather } from '@/composables/useWeather'
+
+const { error } = useWeather()
 </script>
