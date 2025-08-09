@@ -31,4 +31,4 @@ WORKDIR /src/app/
 RUN npm install && npm run build
 
 EXPOSE 10000
-CMD ["npm", "run", "start"]
+CMD ["node", ".output/server/index.mjs"]
