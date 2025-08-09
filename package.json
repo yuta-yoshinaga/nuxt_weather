@@ -2,10 +2,11 @@
   "name": "nuxt_weather",
   "version": "1.0.0",
   "description": "Nuxt.js project",
-  "author": "Your Name <you@example.com>",
+  "author": "Yuta Yoshinaga",
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "start": "nuxt start",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
